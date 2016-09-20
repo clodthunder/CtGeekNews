@@ -15,22 +15,21 @@ import gt.lskj.com.geeknew.R;
  * Created by Home on 16/9/18.
  */
 public class FavoritesFragment extends Fragment {
-    private View mMainFragment;
+    private View mView;
 
     //该周期在第二条路的情况下只会执行一次
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         //实例化数据集合
-
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (mMainFragment != null) {
-            mMainFragment = inflater.inflate(R.layout.fragment_main, container, false);
+        if (mView == null) {
+            mView = inflater.inflate(R.layout.fragment_favorites, container, false);
         }
-        return mMainFragment;
+        return mView;
     }
 }

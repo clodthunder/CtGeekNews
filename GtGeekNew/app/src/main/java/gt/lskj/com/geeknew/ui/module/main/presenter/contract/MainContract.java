@@ -1,7 +1,8 @@
 package gt.lskj.com.geeknew.ui.module.main.presenter.contract;
 
-import com.lskj.ct.geeknew.ui.module.base.BasePresenter;
-import com.lskj.ct.geeknew.ui.module.base.BaseView;
+
+import gt.lskj.com.geeknew.ui.module.base.BasePresenter;
+import gt.lskj.com.geeknew.ui.module.base.BaseView;
 
 /**
  * Created by Home on 16/9/19.
@@ -13,6 +14,7 @@ public interface MainContract {
         //显示加载
         void setLoadingIndicator(boolean active);
 
+        void setButtomBar();
     }
 
     interface Presenter extends BasePresenter<View> {

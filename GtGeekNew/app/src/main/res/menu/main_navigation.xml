@@ -1,4 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="@string/nav_title_one">
+        <menu>
+            <item
+                android:id="@+id/nav_main_one"
+                android:checkable="true"
+                android:icon="@drawable/ic_drawer_zhihu"
+                android:title="type_2"/>
+            <item
+                android:id="@+id/nav_main_two"
+                android:checkable="true"
+                android:icon="@drawable/ic_drawer_gank"
+                android:title="type_3"/>
 
+        </menu>
+    </item>
+    <item
+        android:title="@string/nav_title_two">
+        <menu>
+            <item
+                android:id="@+id/nav_main_Four"
+                android:checkable="true"
+                android:icon="@drawable/ic_drawer_like"
+                android:title="type_4"/>
+            <item
+                android:id="@+id/nav_main_Five"
+                android:checkable="true"
+                android:icon="@drawable/ic_drawer_setting"
+                android:title="type_5"/>
+            <item
+                android:id="@+id/nav_main_Six"
+                android:checkable="true"
+                android:icon="@drawable/ic_drawer_about"
+                android:title="type_6"/>
+        </menu>
+    </item>
 </menu>

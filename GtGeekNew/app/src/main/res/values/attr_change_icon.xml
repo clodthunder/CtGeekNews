@@ -1,2 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <attr name="ci_icon" format="reference"></attr>
+    <attr name="ci_color" format="color"></attr>
+    <attr name="ci_text" format="string"></attr>
+    <attr name="ci_textSize" format="dimension"></attr>
+
+    <declare-styleable name="ChangeColorIconWithText">
+        <attr name="ci_icon"></attr>
+        <attr name="ci_color"></attr>
+        <attr name="ci_text"></attr>
+        <attr name="ci_textSize"></attr>
+    </declare-styleable>
+</resources>

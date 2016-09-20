@@ -4,13 +4,13 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import com.lskj.ct.geeknew.app.App;
-import com.lskj.ct.geeknew.utils.ToastUtil;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import gt.lskj.com.geeknew.app.App;
+import gt.lskj.com.geeknew.utils.ToastUtil;
 import timber.log.Timber;
 
 /**

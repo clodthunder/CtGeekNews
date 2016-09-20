@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-</PreferenceScreen>
+<tabs>
+    <tab
+        icon="@drawable/ic_home_white_24dp"
+        id="@+id/tab_main_home"
+        title="首页" />
+    <tab
+        icon="@drawable/ic_group_black_24dp"
+        id="@+id/tab_main_Favorites"
+        title="动态" />
+    <tab
+        icon="@drawable/ic_settings_input_antenna_black_24dp"
+        id="@+id/tab_main_nearby"
+        title="附近" />
+    <tab
+        icon="@drawable/ic_account_box_black_24dp"
+        id="@+id/tab_main_friends"
+        title="环聊" />
+    <tab
+        icon="@drawable/ic_face_black_24dp"
+        id="@+id/tab_main_user"
+        title="个人" />
+</tabs>

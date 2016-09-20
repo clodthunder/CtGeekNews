@@ -28,8 +28,8 @@ public class UserFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (mView != null) {
-            mView = inflater.inflate(R.layout.fragment_main, container, false);
+        if (mView == null) {
+            mView = inflater.inflate(R.layout.fragment_setting, container, false);
         }
         return mView;
     }

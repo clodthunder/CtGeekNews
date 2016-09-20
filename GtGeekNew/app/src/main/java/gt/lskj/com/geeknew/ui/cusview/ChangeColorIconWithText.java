@@ -17,15 +17,14 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 
-import com.lskj.gx.enjoyliving.R;
+import gt.lskj.com.geeknew.R;
 
 public class ChangeColorIconWithText extends View {
 
     private int mColor = 0xFF45C01A;
     private Bitmap mIconBitmap;
-    private String mText = "微信";	
-    private int 	 = (int) TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics());
+    private String mText = "微信";
+    private int mTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics());
 
     private Canvas mCanvas;
     private Bitmap mBitmap;
@@ -64,23 +63,22 @@ public class ChangeColorIconWithText extends View {
         for (int i = 0; i < n; i++) {
             int attr = a.getIndex(i);
             switch (attr) {
-                case R.styleable.ChangeColorIconWithText_g_icon:
+                case R.styleable.ChangeColorIconWithText_ci_icon:
                     BitmapDrawable drawable = (BitmapDrawable) a.getDrawable(attr);
                     mIconBitmap = drawable.getBitmap();
                     break;
-                case R.styleable.ChangeColorIconWithText_g_color:
+                case R.styleable.ChangeColorIconWithText_ci_color:
                     mColor = a.getColor(attr, 0xFF45C01A);
                     break;
-                case R.styleable.ChangeColorIconWithText_g_text:
+                case R.styleable.ChangeColorIconWithText_ci_text:
                     mText = a.getString(attr);
                     break;
-                case R.styleable.ChangeColorIconWithText_g_text_size:
+                case R.styleable.ChangeColorIconWithText_ci_textSize:
                     mTextSize = (int) a.getDimension(attr, TypedValue
                             .applyDimension(TypedValue.COMPLEX_UNIT_SP, 12,
                                     getResources().getDisplayMetrics()));
                     break;
             }
-
         }
 
         a.recycle();

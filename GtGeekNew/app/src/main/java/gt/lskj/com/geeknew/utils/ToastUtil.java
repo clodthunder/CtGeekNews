@@ -6,9 +6,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lskj.ct.geeknew.R;
-import com.lskj.ct.geeknew.app.App;
-
+import gt.lskj.com.geeknew.R;
+import gt.lskj.com.geeknew.app.App;
 
 /**
  * Created by codeest on 2016/8/4.

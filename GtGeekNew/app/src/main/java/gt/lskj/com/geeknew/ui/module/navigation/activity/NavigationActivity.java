@@ -3,10 +3,11 @@ package gt.lskj.com.geeknew.ui.module.navigation.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.lskj.ct.geeknew.R;
-import com.lskj.ct.geeknew.ui.module.base.BaseActivity;
-import com.lskj.ct.geeknew.ui.module.base.BaseView;
-import com.lskj.ct.geeknew.ui.module.navigation.persenter.contract.NavigationContract;
+import gt.lskj.com.geeknew.R;
+import gt.lskj.com.geeknew.ui.module.base.BaseActivity;
+import gt.lskj.com.geeknew.ui.module.base.BaseView;
+import gt.lskj.com.geeknew.ui.module.navigation.persenter.contract.NavigationContract;
+
 
 /**
  * Created by Home on 16/9/19.

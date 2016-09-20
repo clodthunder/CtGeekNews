@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:descendantFocusability="afterDescendants"
     android:orientation="vertical"
     tools:context=".ui.module.main.activity.MainActivity">
-
 
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/dl_nav_content"
@@ -16,24 +15,34 @@
         android:layout_weight="1"
         android:fitsSystemWindows="true">
         <!-- The main content view -->
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/ll_main_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/tb_main"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"/>
+                android:layout_alignParentTop="true"
+                android:background="@color/colorPrimary" />
 
-            <TextView
+            <com.roughike.bottombar.BottomBar
+                android:id="@+id/bb_main"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_alignParentBottom="true"
+                app:bb_showShadow="false"
+                app:bb_tabXmlResource="@xml/bottombar_tabs" />
+
+            <FrameLayout
+                android:id="@+id/fl_main_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Main"
-                android:textColor="@android:color/black"/>
-        </LinearLayout>
+                android:layout_above="@id/bb_main"
+                android:layout_below="@id/tb_main" />
+
+        </RelativeLayout>
 
         <android.support.design.widget.NavigationView
             android:id="@+id/nv_main"
@@ -42,6 +51,6 @@
             android:layout_gravity="start"
             app:headerLayout="@layout/nav_header"
             app:itemBackground="@drawable/drawer_item_bg"
-            app:menu="@menu/main_navigation"/>
+            app:menu="@menu/main_navigation" />
     </android.support.v4.widget.DrawerLayout>
 </LinearLayout>

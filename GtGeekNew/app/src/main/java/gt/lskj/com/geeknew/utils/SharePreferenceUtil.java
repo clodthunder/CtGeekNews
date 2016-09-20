@@ -3,8 +3,9 @@ package gt.lskj.com.geeknew.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.lskj.ct.geeknew.app.App;
-import com.lskj.ct.geeknew.app.Constants;
+import gt.lskj.com.geeknew.app.App;
+import gt.lskj.com.geeknew.app.Constants;
+
 
 /**
  * Created by Home on 16/9/18.
