@@ -3,4 +3,10 @@
     <string name="nav_title_one">资讯</string>
     <string name="nav_title_two">选项</string>
     <string name="main">Main</string>
+
+    <string name="action_copy">复制链接到剪贴板</string>
+    <string name="action_save">保存到本地</string>
+    <string name="action_share">分享链接</string>
+    <string name="action_like">收藏</string>
+    <string name="action_search">搜索</string>
 </resources>

@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 24
@@ -37,14 +38,13 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:24.2.1'
     testCompile 'junit:junit:4.12'
     compile "com.android.support:design:$rootProject.ext.supportLibraryVersion"
-
     //network
     compile "com.google.code.gson:gson:$rootProject.ext.gsonVersion"
     compile "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofit2Version"
@@ -54,11 +54,20 @@ dependencies {
     compile "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.okhttp3Version"
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
+    compile 'jp.wasabeef:glide-transformations:2.0.1'
+    // If you want to use the GPU Filters
+    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.3.0'
+
+    //guava
+    compile "com.google.guava:guava:$rootProject.ext.guavaVersion"
     //rx
     compile 'io.reactivex:rxjava:1.2.0'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
     //butterknife
+    compile 'com.google.dagger:dagger:2.0.2'
+    compile 'com.google.dagger:dagger-compiler:2.0.2'
+    compile 'javax.annotation:javax.annotation-api:1.2'
     compile 'com.jakewharton:butterknife:8.2.1'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
     //db
@@ -71,15 +80,18 @@ dependencies {
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
     //zxing
     compile "com.google.zxing:core:$rootProject.ext.zxingVersion"
+
     compile "com.google.zxing:android-core:$rootProject.ext.zxingVersion"
     //log
-    compile 'com.jakewharton.timber:timber:4.1.2'
+    compile 'com.jakewharton.timber:timber:4.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.android.support:cardview-v7:24.2.1'
     compile 'com.android.support:recyclerview-v7:24.2.1'
     compile 'com.android.support:gridlayout-v7:24.2.1'
-
     //three
     compile 'com.roughike:bottom-bar:2.0.2'
+    compile 'me.yokeyword:fragmentation:0.7.10'
+    compile 'com.victor:lib:1.0.4'
+    compile 'com.github.chrisbanes.photoview:library:1.2.4'
 }

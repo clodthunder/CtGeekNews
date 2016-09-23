@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -24,17 +23,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import gt.lskj.com.geeknew.R;
 import gt.lskj.com.geeknew.app.Constants;
-import gt.lskj.com.geeknew.ui.module.base.BaseActivity;
+import gt.lskj.com.geeknew.ui.base.BaseActivity;
+import gt.lskj.com.geeknew.ui.module.main.contract.MainContract;
 import gt.lskj.com.geeknew.ui.module.main.fragment.FavoritesFragment;
 import gt.lskj.com.geeknew.ui.module.main.fragment.FriendsFragment;
 import gt.lskj.com.geeknew.ui.module.main.fragment.MainFragment;
 import gt.lskj.com.geeknew.ui.module.main.fragment.NearByFragment;
 import gt.lskj.com.geeknew.ui.module.main.fragment.UserFragment;
 import gt.lskj.com.geeknew.ui.module.main.presenter.MainPresenter;
-import gt.lskj.com.geeknew.ui.module.main.presenter.contract.MainContract;
 import gt.lskj.com.geeknew.utils.ActivityStackUtil;
+import gt.lskj.com.geeknew.utils.ActivityUtils;
 import gt.lskj.com.geeknew.utils.SharePreferenceUtil;
-import gt.lskj.com.geeknew.utils.ToastUtil;
 import rx.Subscriber;
 import timber.log.Timber;
 
@@ -47,22 +46,19 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     NavigationView mNavigationView;
     @BindView(R.id.bb_main)
     BottomBar mBottomBar;
-
-    MenuItem mLastMenuItem;
+    //默认选中的menuitem
+    private MenuItem mLastMenuItem;
     private int defalut = R.id.nav_main_one;
     private long clickTime = 0; //记录第一次点击的时间
-    private MainPresenter mMainPresenter;
     private final String[] RW_PERMISSION =
             new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_EXTERNAL_STORAGE};
-
     private FragmentManager mFragmentManager;
     private MainFragment mMainFragment;
     private FriendsFragment mFriendsFragment;
     private NearByFragment mNearByFragment;
     private FavoritesFragment mFavoritesFragment;
     private UserFragment mUserFragment;
-
 
     // Used to load the 'native-lib' library on application startup.
 //    static {
@@ -79,11 +75,43 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         Timber.tag("MainActivity");
-
 //        // Example of a call to a native method
 //        TextView tv = (TextView) findViewById(R.id.sample_text);
 //        tv.setText(stringFromJNI());
+        //fragmentManager
+        mFragmentManager = getSupportFragmentManager();
+        if (mMainFragment == null) {
+            mMainFragment = MainFragment.newInstance();
+        }
+        ActivityUtils.addFragmentToActivity(mFragmentManager, mMainFragment, R.id.fl_main_content);
+    }
 
+    //dragg activity
+    @Override
+    protected void initInject() {
+        getActivityComponent().inject(this);
+    }
+
+    @Override
+    protected void initEventAndData() {
+        if (mLastMenuItem != null) {
+            mLastMenuItem.setChecked(true);
+        }
+        if (mNavigationView != null) {
+            setDrawerContent(mNavigationView);
+        }
+        if (mBottomBar != null) {
+            setBottomBar(mBottomBar);
+        }
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initToolBar() {
         mToolbar.setNavigationIcon(R.drawable.ic_reorder_white_24dp);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.dl_nav_content);
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -92,10 +120,24 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             @Override
             public void onClick(View view) {
                 Timber.d("setNavigationOnClickListener");
-                mDrawerLayout.openDrawer(Gravity.START);
+                mDrawerLayout.openDrawer(GravityCompat.START);
             }
         });
+    }
 
+    //处理双击退出事件
+    @Override
+    public void onBackPressedSupport() {
+        if (System.currentTimeMillis() - clickTime > 2000) {
+            clickTime = System.currentTimeMillis();
+            Toast.makeText(MainActivity.this, "再次点击退出", Toast.LENGTH_SHORT).show();
+        } else {
+            ActivityStackUtil.finishAllActivity();
+        }
+    }
+
+    //设置左侧layout
+    private void setDrawerContent(NavigationView navigationView) {
         if (mLastMenuItem == null) {
             //判断是否具有权限
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
@@ -134,104 +176,99 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             }
         }
         mLastMenuItem = mNavigationView.getMenu().findItem(defalut);
-        if (mLastMenuItem != null) {
-            mLastMenuItem.setChecked(true);
-        }
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        //设置监听item 点击事件
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                ToastUtil.shortShow(item.getTitle().toString());
+                switch (item.getItemId()) {
+                    case R.id.nav_main_one:
+                        MainActivity.this.invokeTbsVideoPlayer(
+                                "http://125.64.133.74/data9/userfiles/video02/2014/12/11/2796948-280-068-1452.mp4");
+                        break;
+                    case R.id.nav_main_two:
+
+                        break;
+                    case R.id.nav_main_Four:
+
+                        break;
+                    case R.id.nav_main_Five:
+
+                        break;
+                    case R.id.nav_main_Six:
+
+                        break;
+                }
                 //修改选中状态
                 if (mLastMenuItem != null) {
                     mLastMenuItem.setChecked(false);
                 }
-                mLastMenuItem = item;
-                item.setChecked(true);
-                //关闭
-                mDrawerLayout.closeDrawers();
                 //存储数据到sharepreference
-                boolean isCommite = SharePreferenceUtil.getAppSp().edit().putInt(Constants.SP_CURRENT_ITEM, item.getItemId()).commit();
+                boolean isCommite = SharePreferenceUtil.getAppSp()
+                        .edit().putInt(Constants.SP_CURRENT_ITEM, item.getItemId()).commit();
                 if (isCommite) {
                     Timber.e("Save SP_CURRENT_ITEM complete!");
                 } else {
                     Timber.e("Save SP_CURRENT_ITEM failed!");
                 }
+
+                mLastMenuItem = item;
+                // Close the navigation drawer when an item is selected.
+                item.setChecked(true);
+                mDrawerLayout.closeDrawers();
                 return false;
             }
         });
-        //fragmentManager
-        mFragmentManager = getSupportFragmentManager();
-        mMainFragment = new MainFragment();
-        mFragmentManager.beginTransaction().add(R.id.fl_main_content, mMainFragment, "MainFragment").commit();
+    }
 
-        mBottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+    //设置底部的Bar
+    private void setBottomBar(BottomBar bottombar) {
+        bottombar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
                 switch (tabId) {
                     case R.id.tab_main_home:
-                        mFragmentManager.beginTransaction().replace(R.id.fl_main_content, mMainFragment).commit();
+                        if (mMainFragment != null) {
+                            mMainFragment = MainFragment.newInstance();
+                            ActivityUtils.addFragmentToActivity(mFragmentManager, mMainFragment, R.id.fl_main_content);
+
+                        }
                         break;
                     case R.id.tab_main_Favorites:
                         if (mFavoritesFragment == null) {
                             mFavoritesFragment = new FavoritesFragment();
+                            ActivityUtils.addFragmentToActivity(mFragmentManager, mFavoritesFragment, R.id.fl_main_content);
                         }
-                        mFragmentManager.beginTransaction().replace(R.id.fl_main_content,mFavoritesFragment ).commit();
                         break;
                     case R.id.tab_main_friends:
                         if (mFriendsFragment == null) {
                             mFriendsFragment = new FriendsFragment();
+                            ActivityUtils.addFragmentToActivity(mFragmentManager, mFriendsFragment, R.id.fl_main_content);
                         }
-                        mFragmentManager.beginTransaction().replace(R.id.fl_main_content,mFriendsFragment ).commit();
                         break;
                     case R.id.tab_main_nearby:
                         if (mNearByFragment == null) {
                             mNearByFragment = new NearByFragment();
+                            ActivityUtils.addFragmentToActivity(mFragmentManager, mNearByFragment, R.id.fl_main_content);
                         }
-                        mFragmentManager.beginTransaction().replace(R.id.fl_main_content,mNearByFragment ).commit();
                         break;
                     case R.id.tab_main_user:
                         if (mUserFragment == null) {
                             mUserFragment = new UserFragment();
+                            ActivityUtils.addFragmentToActivity(mFragmentManager, mUserFragment, R.id.fl_main_content);
                         }
-                        mFragmentManager.beginTransaction().replace(R.id.fl_main_content,mUserFragment ).commit();
                         break;
                 }
             }
         });
-
-
-
     }
 
-    @Override
-    protected void initEventAndData() {
-
-    }
-
-    @Override
-    protected int getLayout() {
-        return R.layout.activity_main;
-    }
-
-    //处理双击退出事件
-    @Override
-    public void onBackPressed() {
-        if (System.currentTimeMillis() - clickTime > 2000) {
-            clickTime = System.currentTimeMillis();
-            Toast.makeText(MainActivity.this, "再次点击退出", Toast.LENGTH_SHORT).show();
-        } else {
-            ActivityStackUtil.finishAllActivity();
-        }
-    }
-
-
-    @Override
-    public void setLoadingIndicator(boolean active) {
-
-    }
-
-    @Override
-    public void setButtomBar() {
+    /**
+     * 用于TBS 视频裸播
+     *
+     * @param videoUrl
+     *            视频源 url
+     */
+    private void invokeTbsVideoPlayer(String videoUrl) {
 
     }
 }

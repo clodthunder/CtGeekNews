@@ -9,6 +9,10 @@ import android.view.WindowManager;
 
 import com.squareup.leakcanary.LeakCanary;
 
+import gt.lskj.com.geeknew.BuildConfig;
+import gt.lskj.com.geeknew.dragg2.component.AppComponent;
+import gt.lskj.com.geeknew.dragg2.component.DaggerAppComponent;
+import gt.lskj.com.geeknew.dragg2.module.AppModule;
 import gt.lskj.com.geeknew.utils.ActivityStackUtil;
 import timber.log.Timber;
 
@@ -34,6 +38,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        initTimer();
         Timber.tag("App");
         instance = this;
         //初始化屏幕宽高
@@ -67,4 +72,21 @@ public class App extends Application {
         ActivityStackUtil.finishAllActivity();
     }
 
+
+    /**
+     * 初始化日志
+     */
+    private void initTimer() {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
+    }
+
+
+    //dragg2
+    public static AppComponent getAppComponent() {
+        return DaggerAppComponent.builder()
+                .appModule(new AppModule(instance))
+                .build();
+    }
 }
