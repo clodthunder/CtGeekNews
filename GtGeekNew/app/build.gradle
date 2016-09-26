@@ -25,6 +25,16 @@ android {
         }
     }
 
+    lintOptions {
+        //lint 遇到 error 时继续 构建
+        abortOnError false
+        //build release 版本 时 开启lint 检测
+        checkReleaseBuilds false
+        // 防止在发布的时候出现因MissingTranslation导致Build Failed!
+        disable 'MissingTranslation'
+    }
+
+
     productFlavors {
         dev {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "google"]
@@ -35,6 +45,11 @@ android {
             path "CMakeLists.txt"
         }
     }
+//txt//    sourceSets {
+////        main {
+////            jniLibs.srcDirs = ['libs']
+////        }
+////    }
 }
 
 dependencies {

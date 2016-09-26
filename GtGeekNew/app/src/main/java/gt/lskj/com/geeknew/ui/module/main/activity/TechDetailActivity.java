@@ -5,6 +5,8 @@ import android.os.Build;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
@@ -31,10 +33,9 @@ public class TechDetailActivity extends BaseNActivity {
     @BindView(R.id.view_loading)
     RotateLoading viewLoading;
 
-//    RealmHelper mRealmHelper;
+    //    RealmHelper mRealmHelper;
     MenuItem menuItem;
-
-    String title,url,id;
+    String title, url, id;
     boolean isLiked;
 
     @Override
@@ -55,7 +56,7 @@ public class TechDetailActivity extends BaseNActivity {
         title = intent.getExtras().getString("title");
         url = intent.getExtras().getString("url");
         id = intent.getExtras().getString("id");
-        setToolBar(toolBar,title);
+        setToolBar(toolBar, title);
         WebSettings settings = wvTechContent.getSettings();
         if (SharePreferenceUtil.getNoImageState()) {
             settings.setBlockNetworkImage(true);
@@ -74,14 +75,29 @@ public class TechDetailActivity extends BaseNActivity {
         settings.setLoadWithOverviewMode(true);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         settings.setSupportZoom(true);
-        wvTechContent.setWebViewClient(new WebViewClient(){
+        wvTechContent.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
+                Toast.makeText(TechDetailActivity.this, "image url:" + url, Toast.LENGTH_SHORT).show();
+                if (url == null) {
+                    return false;
+                    //use whatever image formats you are looking for here.
+                } else if (url.trim().toLowerCase().endsWith(".img")) {
+                    String imageUrl = url;//here is your image url, do what you want with it
+                } else {
+                    view.loadUrl(url);
+                }
                 return true;
             }
+
+            @Override
+            public void onPageFinished(WebView webView, String s) {
+//                super.onPageFinished(webView, s);
+                //如果渲染后有视频播发 就得把加速器关闭
+                wvTechContent.setLayerType(View.LAYER_TYPE_NONE, null);
+            }
         });
-        wvTechContent.setWebChromeClient(new WebChromeClient(){
+        wvTechContent.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
@@ -93,12 +109,18 @@ public class TechDetailActivity extends BaseNActivity {
                     }
                 }
             }
+
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
                 setTitle(title);
             }
         });
+        if (Build.VERSION.SDK_INT >= 19) {//硬件加速器的使用
+            wvTechContent.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        } else {
+            wvTechContent.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
         wvTechContent.loadUrl(url);
     }
 

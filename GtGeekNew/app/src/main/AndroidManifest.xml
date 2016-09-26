@@ -59,28 +59,19 @@
             android:name=".ui.module.main.activity.TechDetailActivity"
             android:configChanges="keyboardHidden|keyboard|orientation"
             android:windowSoftInputMode="stateHidden|adjustResize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 
         <activity
-
             android:name="com.tencent.smtt.sdk.VideoActivity"
-
             android:configChanges="orientation|screenSize|keyboardHidden"
-
             android:exported="false"
-
             android:launchMode="singleTask"
-
             android:alwaysRetainTaskState="true">
-
             <intent-filter>
-
                 <action android:name="com.tencent.smtt.tbs.video.PLAY" />
-
                 <category android:name="android.intent.category.DEFAULT" />
-
             </intent-filter>
-
         </activity>
 
         <!--<meta-data-->

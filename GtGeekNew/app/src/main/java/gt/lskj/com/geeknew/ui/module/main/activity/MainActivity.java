@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tencent.smtt.sdk.TbsVideo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -182,8 +183,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_main_one:
-                        MainActivity.this.invokeTbsVideoPlayer(
-                                "http://125.64.133.74/data9/userfiles/video02/2014/12/11/2796948-280-068-1452.mp4");
+                        //Tbs播放器是否已经可以使用。
+                        if (TbsVideo.canUseTbsPlayer(mContext)) {
+                            TbsVideo.openVideo(mContext, "");
+                            //  public static void openVideo(Context context, String videoUrl, Bundle extraData)
+                            //  extraData对象是根据定制需要传入约定的信息，没有需要可以传如null
+                        }
                         break;
                     case R.id.nav_main_two:
 
@@ -262,13 +267,4 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         });
     }
 
-    /**
-     * 用于TBS 视频裸播
-     *
-     * @param videoUrl
-     *            视频源 url
-     */
-    private void invokeTbsVideoPlayer(String videoUrl) {
-
-    }
 }

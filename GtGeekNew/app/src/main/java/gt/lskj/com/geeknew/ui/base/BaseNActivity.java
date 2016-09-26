@@ -29,6 +29,7 @@ public abstract class BaseNActivity extends SupportActivity {
         initToolBar();
         initEventAndData();
     }
+
     protected void setToolBar(Toolbar toolbar, String title) {
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
